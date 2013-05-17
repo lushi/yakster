@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>All Users</h1>
+    {% for user, post in obj %}
+        <a href="/users/{{ user.username }}">
+            <img class="avatar" src="{{ user.profile.gravatar_url }}">
+            <span class="name">{{ user.first_name }}</span>
+        </a>
+        @{{ user.username }}
+        <p>
+            {{ user.post_count}} Posts
+
+        </p>
+        <p>{{ post.title }}</p>
+    {% endfor %}
+{% endblock %}

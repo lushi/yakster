@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block login %}
+    {% with user.username as username %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block content %}
+    <h1>Create a Post</h1>
+    <p>
+        <form action="/submit" method="post">
+        {% for field in post_form %}{% csrf_token %}
+        {{ field }}
+        {% endfor %}
+        <input type="hidden" value="{{ next_url }}" name="next_url">
+        <input type="submit" value="post">
+        </form>
+    </p>
+    <h1>My Posts</h1>
+    {% for post in my_posts %}
+        <h3>{{ post.title }}</h3>
+        <p>
+            {{ post.body }}
+            {{ post.creation_date }}
+        </p>
+    {% endfor %}
+
+    <
+{% endblock %}

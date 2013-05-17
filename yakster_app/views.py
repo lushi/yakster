@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from yakster_app.forms import AuthenticateForm, UserCreateForm, PostForm
 from yakster_app.models import Yakster
 
@@ -14,7 +13,7 @@ def index(request, auth_form=None, user_form=None):
         my_posts = Yakster.objects.filter(user=user.id)
 
         return render(request,
-                      'user.html',
+                      'me.html',
                       {'post_form': post_form, 'user': user,
                        'my_posts' : my_posts,
                        'next_url': '/', })
@@ -57,6 +56,8 @@ def signup(request):
             return index(request, user_form=user_form)
     return redirect('/')
 
+from django.contrib.auth.decorators import login_required
+
 @login_required
 def submit(request):
     if request.method == "POST":
@@ -79,3 +80,32 @@ def posts(request, post_form=None):
                   'posts.html',
                   {'next_url': '/posts', 'posts': posts,
                   'username': request.user.username})
+
+from django.db.models import Count
+from django.http import Http404
+
+def get_latest(user):
+    try:
+        return user.yakster_set.order_by('-id')[0]
+    except IndexError:
+        return ""
+
+@login_required
+def users(request, username="", post_form=None):
+    if username:
+        # Show a profile
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
+        posts = Yakster.objects.filter(user=user.id)
+        return render(request, 'user.html', {'user': user, 'posts': posts, })
+    users = User.objects.all().annotate(post_count=Count('yakster'))
+    posts = map(get_latest, users)
+    obj = zip(users, posts)
+    post_form = post_form or PostForm()
+    return render(request,
+                  'profiles.html',
+                  {'obj': obj, 'next_url': '/users/',
+                   'post_form': post_form,
+                   'username': request.user.username, })

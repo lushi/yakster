@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     url(r'^signup$', 'yakster_app.views.signup'), # signup
     url(r'^posts$', 'yakster_app.views.posts'), # posts
     url(r'^submit$', 'yakster_app.views.submit'), # submit new post
+    url(r'^users/$', 'yakster_app.views.users'),
+    url(r'^users/(?P<username>\w{0,30})/$', 'yakster_app.views.users'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
