@@ -5,9 +5,10 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'yakster.views.home', name='home'),
-    # url(r'^yakster/', include('yakster.foo.urls')),
+    url(r'^$', 'yakster_app.views.index'), # root
+    url(r'^login$', 'yakster_app.views.login_view'), # login
+    url(r'^logout$', 'yakster_app.views.logout_view'), # logout
+    url(r'^signup$', 'yakster_app.views.signup'), # signup
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

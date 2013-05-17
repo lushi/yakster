@@ -35,17 +35,17 @@ class AuthenticateForm(AuthenticationForm):
                 self.fields[f].widget.attrs.update({'class': 'error', 'value': strip_tags(error)})
         return form
 
-class YaksterForm(forms.ModelForm):
-    title = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'class': 'yakTitle'}))
-    content = forms.TextField(required=True, widget=forms.widgets.Textarea(attrs={'class': 'yakText'}))
+class PostForm(forms.ModelForm):
+    title = forms.CharField(required=True, widget=forms.widgets.Textarea(attrs={'class': 'postTitle'}))
+    body = forms.CharField(required=True, widget=forms.widgets.Textarea(attrs={'class': 'postBody'}))
 
     def is_valid(self):
-        form = super(YaksterForm, self).is_valid()
+        form = super(PostForm, self).is_valid()
         for f in self.errors.iterkeys():
             if f != '__all__':
-                self.fields[f].widget.attrs.update({'class': 'error yakText'})
+                self.fields[f].widget.attrs.update({'class': 'error postBody'})
         return form
 
     class Meta:
-        model = Ribbit
+        model = Yakster
         exclude = ('user',)
