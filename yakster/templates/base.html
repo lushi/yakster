@@ -1,39 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="{{ STATIC_URL }}css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/custom.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <header>
-        <h1>Yakster<h1>
-        {% block login %}
-        <a href="/">Home</a>
-        <a href="/users/">Users</a>
-        <a href="/posts">Posts</a>
-        <form action="/logout">
-            <input type="submit" id="btnLogOut" value="Log Out">
-        </form>
-        {% endblock %}
+        <div class="wrapper">
+            <nav class="top-bar">
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a href="/">Yakster</a><h1>
+                    </li>
+                </ul>
+            {% block login %}
+                <section class="top-bar-section">
+                    <ul class="right">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/users/">Users</a></li>
+                        <li><a href="/posts">Latest posts</a></li>
+                        <li><form action="/logout">
+                            <input type="submit" class="button" value="Log Out">
+                        </form></li>
+                    </ul>
+                </section>
+            {% endblock %}
+            </nav>
+        </div>
     </header>
+    <div id="content">
+        <div class="wrapper">
+            {% block flash %}
+            {% if auth_form.non_field_errors or user_form.non_field_errors or post_form.errors %}
+            <div class="flash error">
+                {{ auth_form.non_field_errors }}
+                {{ user_form.non_field_errors }}
+                {{ post_form.content.errors }}
+            </div>
+            {% endif %}
+            {% if notice %}
+            <div class="flash notice">
+                {{ notice }}
+            </div>
+            {% endif %}
+            {% endblock %}
 
-    {% block flash %}
-    {% if auth_form.non_field_errors or user_form.non_field_errors or yakster_form.errors %}
-    <div class="flash error">
-        {{ auth_form.non_field_errors }}
-        {{ user_form.non_field_errors }}
-        {{ yakster_form.content.errors }}
+            {% block content %}
+
+            {% endblock %}
+        </div>
     </div>
-    {% endif %}
-    {% if notice %}
-    <div class="flash notice">
-        {{ notice }}
-    </div>
-    {% endif %}
-    {% endblock %}
-
-    {% block content %}
-
-    {% endblock %}
-
     <footer>
             <p>Yakster</p>
             <a href="http://www.djangoproject.com/">

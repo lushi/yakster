@@ -1,0 +1,41 @@
+textarea.postTitle {
+    height: 40px;
+    border: 1px solid;
+}
+
+textarea.postText {
+    height: 320px;
+    border: 1px solid;
+}
+
+.wrapper {
+    width: 860px;
+    margin: auto;
+}
+
+#content {
+   margin-bottom: 15px;
+   min-height: 560px;
+}
+
+.flash.error {
+    padding: 10px;
+    margin: 20px 0;
+    background: #ffefef;
+    color: #4c1717;
+    border: 1px solid #4c1717;
+}
+
+.flash.notice {
+    padding: 10px;
+    margin: 20px 0;
+    background: #efffd7;
+    color: #8ba015;
+    border: 1px solid #8ba015;
+}
+
+footer {
+    height: 251px;
+    font-size: 14px;
+    clear: both;
+}

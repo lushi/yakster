@@ -37,13 +37,13 @@ class AuthenticateForm(AuthenticationForm):
 
 class PostForm(forms.ModelForm):
     title = forms.CharField(required=True, widget=forms.widgets.Textarea(attrs={'class': 'postTitle'}))
-    body = forms.CharField(required=True, widget=forms.widgets.Textarea(attrs={'class': 'postBody'}))
+    body = forms.CharField(required=True, widget=forms.widgets.Textarea(attrs={'class': 'postText'}))
 
     def is_valid(self):
         form = super(PostForm, self).is_valid()
         for f in self.errors.iterkeys():
             if f != '__all__':
-                self.fields[f].widget.attrs.update({'class': 'error postBody'})
+                self.fields[f].widget.attrs.update({'class': 'error postText'})
         return form
 
     class Meta:

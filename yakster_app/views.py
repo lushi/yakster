@@ -69,7 +69,7 @@ def submit(request):
             post.save()
             return redirect(next_url)
         else:
-            return public(request, post_form)
+            return posts(request, post_form)
     return redirect('/')
 
 @login_required
@@ -78,7 +78,7 @@ def posts(request, post_form=None):
     # titles = Post.objects.values_list('title', flat=True).reverse()
     return render(request,
                   'posts.html',
-                  {'next_url': '/posts', 'posts': posts,
+                  {'post_form': post_form,'next_url': '/posts', 'posts': posts,
                   'username': request.user.username})
 
 from django.db.models import Count

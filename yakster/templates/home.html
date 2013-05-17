@@ -2,17 +2,23 @@
 
 {% block login %}
     <form action="/login" method="post">{% csrf_token %}
-        {% for field in auth_form %}
-        {{ field }}
-        {% endfor %}
-        <input type="submit" id="btnLogIn" value="Log In">
+        <div class="row">
+            {% for field in auth_form %}
+            <div class="large-4 columns">
+                {{ field }}
+            </div>
+            {% endfor %}
+        <input type="submit" class="small button" value="Log In">
+        </div>
     </form>
 {% endblock %}
 
 {% block content %}
 {% if auth_form.non_field_errors or user_form.non_field_errors %}
+<div class="flash error">
     {{ auth_form.non_field_errors }}
     {{ user_form.non_field_errors }}
+</div>
 {% endif %}
     <h1>New to Yakster?</h1>
     <p>
@@ -20,7 +26,7 @@
             {% for field in user_form %}
             {{ field }}
             {% endfor %}
-            <input type="submit" value="Create Account">
+            <input type="submit" class="button" value="Create Account">
         </form>
     </p>
 {% endblock %}

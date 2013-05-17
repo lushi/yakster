@@ -6,15 +6,14 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ user.first_name }}'s Profile</h1>
-        <a href="/users/{{ user.username }}">
-            <img class="avatar" src="{{ user.profile.gravatar_url }}">
-            <span class="name">{{ user.first_name }}</span>
-        </a>
-            @{{ user.username }}
-        <p>{{ posts.count }} Posts</p>
-
     <h1>{{ user.first_name }}'s Posts</h1>
+    <a href="/users/{{ user.username }}">
+        <img class="avatar" src="{{ user.profile.gravatar_url }}">
+        <span class="name">{{ user.first_name }}</span>
+    </a>
+        @{{ user.username }}
+    <p>{{ posts.count }} Posts</p>
+
     {% for post in posts %}
         <a href="/users/{{ user.username }}">
             <img class="avatar" src="{{ user.profile.gravatar_url }}">
