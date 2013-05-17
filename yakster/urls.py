@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     url(r'^login$', 'yakster_app.views.login_view'), # login
     url(r'^logout$', 'yakster_app.views.logout_view'), # logout
     url(r'^signup$', 'yakster_app.views.signup'), # signup
+    url(r'^posts$', 'yakster_app.views.posts'), # posts
+    url(r'^submit$', 'yakster_app.views.submit'), # submit new post
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

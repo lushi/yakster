@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from yakster_app.forms import AuthenticateForm, UserCreateForm, PostForm
 from yakster_app.models import Yakster
 
@@ -55,3 +56,26 @@ def signup(request):
         else:
             return index(request, user_form=user_form)
     return redirect('/')
+
+@login_required
+def submit(request):
+    if request.method == "POST":
+        post_form = PostForm(data=request.POST)
+        next_url = request.POST.get("next_url", "/")
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect(next_url)
+        else:
+            return public(request, post_form)
+    return redirect('/')
+
+@login_required
+def posts(request, post_form=None):
+    posts = Yakster.objects.all().reverse()
+    # titles = Yakster.objects.values_list('title', flat=True).reverse()
+    return render(request,
+                  'posts.html',
+                  {'next_url': '/posts', 'posts': posts,
+                  'username': request.user.username})
