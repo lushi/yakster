@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from yakster_app.forms import AuthenticateForm, UserCreateForm, PostForm
-from yakster_app.models import Yakster
+from yakster_app.models import Post
 
 def index(request, auth_form=None, user_form=None):
     # User is logged in
@@ -10,7 +10,7 @@ def index(request, auth_form=None, user_form=None):
     if request.user.is_authenticated():
         post_form = PostForm()
         user = request.user
-        my_posts = Yakster.objects.filter(user=user.id)
+        my_posts = Post.objects.filter(user=user.id)
 
         return render(request,
                       'me.html',
@@ -74,8 +74,8 @@ def submit(request):
 
 @login_required
 def posts(request, post_form=None):
-    posts = Yakster.objects.all().reverse()
-    # titles = Yakster.objects.values_list('title', flat=True).reverse()
+    posts = Post.objects.all().reverse()
+    # titles = Post.objects.values_list('title', flat=True).reverse()
     return render(request,
                   'posts.html',
                   {'next_url': '/posts', 'posts': posts,
@@ -86,7 +86,7 @@ from django.http import Http404
 
 def get_latest(user):
     try:
-        return user.yakster_set.order_by('-id')[0]
+        return user.post_set.order_by('-id')[0]
     except IndexError:
         return ""
 
@@ -98,9 +98,9 @@ def users(request, username="", post_form=None):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             raise Http404
-        posts = Yakster.objects.filter(user=user.id)
+        posts = Post.objects.filter(user=user.id)
         return render(request, 'user.html', {'user': user, 'posts': posts, })
-    users = User.objects.all().annotate(post_count=Count('yakster'))
+    users = User.objects.all().annotate(post_count=Count('post'))
     posts = map(get_latest, users)
     obj = zip(users, posts)
     post_form = post_form or PostForm()
