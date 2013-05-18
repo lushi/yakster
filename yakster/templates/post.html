@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+      <a href="/users/{{ post.user.username }}">
+        <img class="avatar" src="{{ post.user.profile.gravatar_url }}">
+        <span class="name">{{ post.user.first_name }}</span>
+    </a>
+    @{{ post.user.username }}
+    {{ post.creation_date|timesince }}
+    <h3>{{ post.title}}</h3>
+    <p>{{ post.body}}</p>
+{% endblock %}

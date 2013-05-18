@@ -109,3 +109,15 @@ def users(request, username="", post_form=None):
                   {'obj': obj, 'next_url': '/users/',
                    'post_form': post_form,
                    'username': request.user.username, })
+
+def user_post(request, username="", post_id="", post_form=None):
+    if username:
+        try:
+          user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
+        try:
+            post = user.post_set.get(pk=post_id)
+        except Post.DoesNotExist:
+            raise Http404
+        return render(request, 'post.html', {'user': user, 'post': post, })

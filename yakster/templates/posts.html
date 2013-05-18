@@ -5,11 +5,13 @@
     {% for post in posts %}
           <a href="/users/{{ post.user.username }}">
             <img class="avatar" src="{{ post.user.profile.gravatar_url }}">
-            <span class="name">{{ post.user.first_name }}</span>
+            {{ post.user.first_name }}
         </a>
         @{{ post.user.username }}
         {{ post.creation_date|timesince }}
         <h3>{{ post.title}}</h3>
-        <p>{{ post.body}}</p>
+        <a href="/users/{{ post.user.username }}/{{ post.id }}">
+            <p>Read</p>
+        </a>
     {% endfor %}
 {% endblock %}
