@@ -10,8 +10,6 @@
         @{{ post.user.username }}
         {{ post.creation_date|timesince }}
         <h3>{{ post.title}}</h3>
-        <a href="/users/{{ post.user.username }}/{{ post.id }}">
-            <p>Read</p>
-        </a>
+        <a href="/users/{{ post.user.username }}/{{ post.id }}"><p>Read...</p></a>
     {% endfor %}
 {% endblock %}

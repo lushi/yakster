@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% block login %}
-    <form action="/login" method="post">{% csrf_token %}
-        <div class="row">
+    <div id="login" class="reveal-modal large">
+        <h2>Log In</h2>
+        <form action="/login" method="post">{% csrf_token %}
             {% for field in auth_form %}
-            <div class="large-4 columns">
                 {{ field }}
-            </div>
             {% endfor %}
-        <input type="submit" class="small button" value="Log In">
-        </div>
-    </form>
+            <input type="submit" class="small button" value="Submit">
+        </form>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+
+    <a href="#" class="small button" data-reveal-id="login">Log In</a>
 {% endblock %}
 
 {% block content %}
@@ -20,13 +22,19 @@
     {{ user_form.non_field_errors }}
 </div>
 {% endif %}
-    <h1>New to Yakster?</h1>
-    <p>
-        <form action="/signup" method="post">{% csrf_token %}
-            {% for field in user_form %}
-            {{ field }}
-            {% endfor %}
-            <input type="submit" class="button" value="Create Account">
-        </form>
-    </p>
+    <div class="center">
+        <h1>New to Yakster?</h1>
+        <div id="signup" class="reveal-modal large">
+            <h2>Sign up</h2>
+            <form action="/signup" method="post">{% csrf_token %}
+                {% for field in user_form %}
+                {{ field }}
+                {% endfor %}
+                <input type="submit" class="button" value="Create Account">
+            </form>
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
+
+        <a href="#" data-reveal-id="signup" class="large button">Sign Up!</a>
+    </div>
 {% endblock %}

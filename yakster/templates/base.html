@@ -4,6 +4,7 @@
     <link href="{{ STATIC_URL }}css/normalize.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/foundation.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/custom.css" rel="stylesheet" type="text/css">
+    <script src="{{ STATIC_URL }}js/vendor/custom.modernizr.js"></script>
 </head>
 <body>
     <header>
@@ -14,18 +15,18 @@
                         <h1><a href="/">Yakster</a><h1>
                     </li>
                 </ul>
-            {% block login %}
                 <section class="top-bar-section">
                     <ul class="right">
                         <li><a href="/">Home</a></li>
                         <li><a href="/users/">Users</a></li>
                         <li><a href="/posts">Latest posts</a></li>
+                        {% block login %}
                         <li><form action="/logout">
                             <input type="submit" class="button" value="Log Out">
                         </form></li>
+                        {% endblock %}
                     </ul>
                 </section>
-            {% endblock %}
             </nav>
         </div>
     </header>
@@ -51,11 +52,18 @@
             {% endblock %}
         </div>
     </div>
-    <footer>
-            <p>Yakster</p>
-            <a href="http://www.djangoproject.com/">
-                <img src="https://www.djangoproject.com/m/img/badges/djangomade124x25.gif" border="0" alt="Made with Django." title="Made with Django." />
-            </a>
-    </footer>
+    <!-- Check for Zepto support, load jQuery if necessary -->
+    <script>
+      document.write("<script src={{ STATIC_URL }}js/vendor/"
+        + ('__proto__' in {} ? 'zepto' : 'jquery')
+        + '.js><\/script>');
+    </script>
+
+    <script src="{{ STATIC_URL }}js/foundation/foundation.js"></script>
+    <script src="{{ STATIC_URL }}js/foundation/foundation.reveal.js"></script>
+
+    <script>
+        $(document).foundation();
+    </script>
 </body>
 </html>
